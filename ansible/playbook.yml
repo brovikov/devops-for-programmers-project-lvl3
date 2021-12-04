@@ -1,0 +1,57 @@
+- name: Install docker
+  hosts: all
+  remote_user: root
+  roles:
+    - name: geerlingguy.docker
+
+- name: Configure Servers
+  hosts: webservers
+  remote_user: root
+  tasks:
+    - name: Create the deploy user
+      user:
+        name: deploy
+        groups:
+         - docker
+         - sudo
+        state: present
+    - name: Add AUTH KEY
+      authorized_key:
+        user: deploy
+        key: "{{ lookup('file', '/Users/alex/.ssh/id_rsa.pub') }}"
+    - name: Update software cache
+      become: true
+      apt:
+        update_cache: yes
+    - name: Install packages
+      ansible.builtin.apt:
+        pkg:
+          - python3-docker
+          - python3-pip
+        update_cache: yes
+    - name: Install Docker Module for Python
+      ansible.builtin.pip:
+        name: docker
+
+
+- name: Deploy app
+  tags: deploy
+  hosts: webservers
+  remote_user: deploy
+  tasks:
+    - name: Log into DockerHub
+      docker_login:
+        username: "{{ docker_username }}"
+        password: "{{ docker_token }}"
+    - name: Run container
+      community.docker.docker_container:
+        name: devops-example-app-private
+        image: "{{ docker_image }}" 
+        published_ports: 8080:5000
+        restart_policy: always
+        restart: yes
+        container_default_behavior: no_defaults
+        pull: yes
+        env:
+          SERVER_MESSAGE: '{{ ansible_default_ipv4.address }}'
+

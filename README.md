@@ -10,3 +10,9 @@ Login into terraform cloud using `terraform login`
 `make plan` - run terraform plan   
 `make apply` - apply terraform changes   
 `make destroy` - destroy infrastructure
+
+# Server provisioning and app deploy
+  
+`make install` - install ansible roles  
+`make deploy` - provision servers and deploy application  
+

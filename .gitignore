@@ -7,3 +7,4 @@ vendor/
 dist
 .terraform
 terraform.tfstate*
+vault-password

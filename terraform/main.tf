@@ -45,7 +45,7 @@ resource "digitalocean_loadbalancer" "lb" {
     entry_protocol = "http"
 
     // порт по которому балансировщик передает запросы (на другие сервера)
-    target_port     = 3000
+    target_port     = 8080
     target_protocol = "http"
   }
 
@@ -53,26 +53,14 @@ resource "digitalocean_loadbalancer" "lb" {
     entry_port     = 443
     entry_protocol = "https"
 
-    target_port     = 3000
+    target_port     = 8080
     target_protocol = "http"
 
     certificate_name = digitalocean_certificate.cert.name
   }
 
-  # forwarding_rule {
-  #   // порт по которому балансировщик принимает запросы
-  #   entry_port     = 443
-  #   entry_protocol = "https"
-  #
-  #   // порт по которому балансировщик передает запросы (на другие сервера)
-  #   target_port     = 3000
-  #   target_protocol = "http"
-  #
-  #   certificate_name = digitalocean_certificate.cert.name
-  # }
-  // Порт, протокол, путь по которому балансировщик проверяет, что дроплет живой и принимает запросы
   healthcheck {
-    port     = 3000
+    port     = 8080
     protocol = "http"
     path     = "/"
   }
@@ -90,14 +78,6 @@ resource "digitalocean_domain" "example" {
   ip_address = digitalocean_loadbalancer.lb.ip
 }
 
-resource "digitalocean_database_cluster" "postgres" {
-  name       = "postgres-cluster-project3"
-  engine     = "pg"
-  version    = "11"
-  size       = "db-s-1vcpu-1gb"
-  region     = "ams3"
-  node_count = 1
-}
 // Outputs похожи на возвращаемые значения. Они позволяют сгруппировать информацию или распечатать то, что нам необходимо
 // https://www.terraform.io/docs/language/values/outputs.html
 output "droplets_ips" {
