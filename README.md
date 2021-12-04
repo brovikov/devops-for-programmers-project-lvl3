@@ -15,4 +15,6 @@ Login into terraform cloud using `terraform login`
   
 `make install` - install ansible roles  
 `make deploy` - provision servers and deploy application  
-
+  
+  
+App: https://project.hexlet-task.pp.ua/
