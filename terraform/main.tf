@@ -87,3 +87,28 @@ output "droplets_ips" {
     digitalocean_droplet.web-02.ipv4_address
   ]
 }
+
+resource "datadog_monitor" "http_monitor" {
+	name = "http check"
+	type = "service check"
+	query = "\"http.can_connect\".over(\"instance:application_health_check_status\").by(\"host\",\"instance\",\"url\").last(2).count_by_status()"
+	message = "http health check @alexey.brovikov@gmail.com"
+	tags = []
+  monitor_thresholds {
+    warning  = 1
+    ok       = 1
+    critical = 1
+  }
+  notify_no_data    = true
+  no_data_timeframe = 2
+  renotify_interval = 0
+  new_group_delay   = 60
+
+  notify_audit = false
+  locked       = false
+
+  timeout_h    = 60
+  include_tags = true
+
+  priority = 5
+}

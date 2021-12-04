@@ -7,3 +7,12 @@ variable "do_token" {
   type        = string
 }
 
+variable "datadog_api_key" {
+  description = "DataDog API key"
+  type        = string
+}
+
+variable "datadog_app_key" {
+  description = "DataDog API key"
+  type        = string
+}

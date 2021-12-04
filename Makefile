@@ -16,6 +16,10 @@ destroy:
 
 deploy:
 	ansible-playbook -i ansible/hosts -v ansible/playbook.yml --vault-password-file ansible/vault-password
+
+setup-monitoring:
+	ansible-playbook -i ansible/hosts -v ansible/playbook.yml --vault-password-file ansible/vault-password --tags monitoring
+
 	
 create-vault:
 	ansible-vault create ./ansible/group_vars/all/vault.yml --vault-password-file ansible/vault-password
