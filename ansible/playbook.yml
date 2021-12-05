@@ -1,9 +1,9 @@
-- name: Install docker
-  hosts: all
-  remote_user: root
-  roles:
-    - name: geerlingguy.docker
-
+# - name: Install docker
+#   hosts: all
+#   remote_user: root
+#   roles:
+#     - name: geerlingguy.docker
+#
 - name: Configure Servers
   hosts: webservers
   remote_user: root
