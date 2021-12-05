@@ -50,8 +50,8 @@ resource "digitalocean_loadbalancer" "lb" {
   }
 
   forwarding_rule {
-    entry_port      = 443
-    entry_protocol  = "https"
+    entry_port     = 443
+    entry_protocol = "https"
 
     target_port     = 8080
     target_protocol = "http"
@@ -94,11 +94,13 @@ resource "datadog_monitor" "http_monitor" {
 	query   = "\"http.can_connect\".over(\"instance:application_health_check_status\").by(\"host\",\"instance\",\"url\").last(2).count_by_status()"
 	message = "http health check @alexey.brovikov@gmail.com"
 	tags    = []
+
   monitor_thresholds {
     warning  = 1
     ok       = 1
     critical = 1
   }
+
   notify_no_data    = true
   no_data_timeframe = 2
   renotify_interval = 0
