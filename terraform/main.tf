@@ -50,8 +50,8 @@ resource "digitalocean_loadbalancer" "lb" {
   }
 
   forwarding_rule {
-    entry_port     = 443
-    entry_protocol = "https"
+    entry_port      = 443
+    entry_protocol  = "https"
 
     target_port     = 8080
     target_protocol = "http"
@@ -89,11 +89,11 @@ output "droplets_ips" {
 }
 
 resource "datadog_monitor" "http_monitor" {
-	name = "http check"
-	type = "service check"
-	query = "\"http.can_connect\".over(\"instance:application_health_check_status\").by(\"host\",\"instance\",\"url\").last(2).count_by_status()"
+	name    = "http check"
+	type    = "service check"
+	query   = "\"http.can_connect\".over(\"instance:application_health_check_status\").by(\"host\",\"instance\",\"url\").last(2).count_by_status()"
 	message = "http health check @alexey.brovikov@gmail.com"
-	tags = []
+	tags    = []
   monitor_thresholds {
     warning  = 1
     ok       = 1
