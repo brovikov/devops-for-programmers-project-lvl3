@@ -1,6 +1,7 @@
 install:
 	touch ansible/vault-password
 	ansible-galaxy role install -r ansible/requirements.yml
+	ansible-galaxy collection install -r ansible/requirements.yml
 
 init:
 	terraform -chdir=terraform init
@@ -14,12 +15,14 @@ apply:
 destroy:
 	terraform -chdir=terraform destroy
 
-deploy:
+provision:
 	ansible-playbook -i ansible/hosts -v ansible/playbook.yml --vault-password-file ansible/vault-password
+
+deploy:
+	ansible-playbook -i ansible/hosts -v ansible/playbook.yml --vault-password-file ansible/vault-password --tags deploy
 
 setup-monitoring:
 	ansible-playbook -i ansible/hosts -v ansible/playbook.yml --vault-password-file ansible/vault-password --tags monitoring
-
 	
 create-vault:
 	ansible-vault create ./ansible/group_vars/all/vault.yml --vault-password-file ansible/vault-password
