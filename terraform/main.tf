@@ -89,11 +89,12 @@ output "droplets_ips" {
 }
 
 resource "datadog_monitor" "http_monitor" {
-	name    = "http check"
-	type    = "service check"
-	query   = "\"http.can_connect\".over(\"instance:application_health_check_status\").by(\"host\",\"instance\",\"url\").last(2).count_by_status()"
-	message = "http health check @alexey.brovikov@gmail.com"
-	tags    = []
+  name    = "http check"
+  type    = "service check"
+  message = "http health check @alexey.brovikov@gmail.com"
+  tags    = []
+
+  query = "\"http.can_connect\".over(\"instance:application_health_check_status\").by(\"host\",\"instance\",\"url\").last(2).count_by_status()"
 
   monitor_thresholds {
     warning  = 1

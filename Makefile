@@ -15,6 +15,9 @@ apply:
 destroy:
 	terraform -chdir=terraform destroy
 
+lint:
+	terraform fmt -check -diff terraform
+
 provision:
 	ansible-playbook -i ansible/hosts -v ansible/playbook.yml --vault-password-file ansible/vault-password
 
