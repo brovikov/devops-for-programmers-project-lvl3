@@ -46,7 +46,7 @@
     - name: Run container
       community.docker.docker_container:
         name: devops-example-app-private
-        image: "{{ docker_image }}" 
+        image: "{{ docker_image }}"
         published_ports: 8080:5000
         restart_policy: always
         restart: yes
