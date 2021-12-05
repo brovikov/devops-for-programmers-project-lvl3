@@ -15,6 +15,9 @@ by DigitalOcean Version 19.03.12 (Docker CE 20.10.7, Docker Compose 1.27.0)
 Ansible [core 2.11.4]  
 Terraform v1.0.11  
 
+# Project structure  
+![project_structure](https://user-images.githubusercontent.com/4372434/144742260-f3492f87-347c-43d4-bc21-34f2a7ece6c5.jpeg)
+
 # Setup infrastructure
   
 Login into terraform cloud using `terraform login`
