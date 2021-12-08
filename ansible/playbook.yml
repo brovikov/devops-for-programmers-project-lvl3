@@ -1,9 +1,3 @@
-# - name: Install docker
-#   hosts: all
-#   remote_user: root
-#   roles:
-#     - name: geerlingguy.docker
-#
 - name: Configure Servers
   hosts: webservers
   remote_user: root
@@ -18,7 +12,7 @@
     - name: Add AUTH KEY
       authorized_key:
         user: deploy
-        key: "{{ lookup('file', '/Users/alex/.ssh/id_rsa.pub') }}"
+        key: "{{ lookup('file', pub_key_path) }}"
     - name: Update software cache
       become: true
       apt:
